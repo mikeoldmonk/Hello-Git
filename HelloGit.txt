@@ -1,0 +1,143 @@
+==============
+GIT
+==============
+
+GIT VCS version control system
+Commit - операция, берет все подготовленные изменения и отправляет их в репозиторий как единое целое.
+SHA1 160 bit или 40 16x чисел
+
+
+GIT BASH
+git --version
+
+
+GIT CONFIG
+3 уровня конфигурации
+1: все пользователи системы git config --system
+2: настройки конкретного пользователя системы git config --global
+3: текущий репозиторий, с которым ты работаешь git config --local
+
+git config --global user.name ""
+git config --global user.email 123@mail.com
+
+cd git - перейти в папку
+ls -la - посмотреть папки в каталоге
+
+git init - создание репозитория с историей изменений в этой папке
+
+git log
+git status
+
+
+Состояние файлов
+modified - изменён, но не попал в комит
+committed - сохранил состояние проекта
+staged - подготовленный к коммиту
+stagged area - область подготовленных файлов, индекс
+
+git add hello.txt
+git commit -m "Text"
+
+git log
+git log -p более подробный вывод
+git show хэш коммита
+
+vim hello.txt открыть во внутреннем редакторе
+выйти из vim Esc + :x (save and exit) или :q (no save) или :w (write)
+
+если файл был изменён и получил статус modified - можно откатиться до последнего коммита
+git restore hello.txt
+
+git diff какие изменения с момента последнего коммита
+git diff --staged
+git commit -am "Commit" добавит все файлы в индекс, которые modified и закомитит
+
+
+Перемещение файлов (move)
+git mv Hello/hello.txt helloworld.txt перенесёт файл из папки в корень и переименует
+git rm удаление файла
+
+
+Восстановить
+git restore --staged helloworld.txt
+git restore helloworld.txt
+
+git log можно посмотреть хэш
+git show b6f221b2c99ffaa4fbb54182967397294cb4fc05 показать коммит с этим хэшем
+
+
+Git ignore
+mkdir log - создаем папку log
+cd log/ - захоид в папку log
+touch log.txt - создаём файл
+cd .. - перейти на каталог выше
+
+vim .gitignore - открыть в виме файл игнор
+прописываем папки для игнора
+log/
+_cache_/
+*.py[cod] игнорит файлы с расширением pyc, poc и pod 
+
+
+Бранчи (ветки)
+git log - можно посмотреть, где HEAD и master
+git branch new-api - создаём новую ветку
+git checkout new-api - переключаемся на ветку
+
+*** в мастере всегда работающий код ***
+
+git branch -a - посмотреть все ветки
+git merge new-api
+git brunch -d new-api или -D
+
+git checkout -b new-api2 создаст и перейдёт в новую ветку. 1 команда заменяет 2 (созд и перемещ)
+git checkout хэш - перейдёт на конкретный коммит
+git checkout -b new-api2 хэш - перейдёт на новый коммит с новой веткой и туда станет head
+
+git reset --hard хэш - перейти проигнорив изменения
+
+
+Подключение к Github
+
+SSH secure shell protocol протокол прикладного уровня для управления ОС или туннелирования
+openSSH, Putty - 22/TCP
+
+git remote add origin git@github.com:mikeoldmonk/Hello-Git.git (ссылка SSH с гитхаба, origin по умолчанию если он один в проекте)
+git remote -v - посмотреть список репозиториев
+
+fetch для чтения
+push для отправки
+
+git push origin master
+
+Как получить код другому разработчику 
+(в settings добавить по почте или если реп. публичный, то кинуть ссылку)
+
+git clone ссылка - копирует на комп
+git pull origin master - забирает изменения
+
+git push --set-upstream origin master свяжет локальную ветку мастер с удалённой ориджин
+после этого можно выполнять просто git push понимает что изменения нужно отправить в origin\master
+
+git rebase master
+
+в настройках github можно добавить ветку master в branch protection rule.
+тогда другие разрабы не смогут запушить под мастером
+
+
+Теги
+легковесные (указатели) и аннотированные:
+git tag v1
+git tag -a R2022.06 -m "Vasya"
+
+git push v1 - чтобы отправить тег на сервер
+git push --tags - все теги
+
+
+IDE
+Manage Remotes - туда ссылку с гитхаба
+или на стадии New Project
+
+Merge-конфликты
+* merge = сливать
+Merge into Current
